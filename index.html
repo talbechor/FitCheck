@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FitCheck: your pattern size at your gauge</title>
+    <meta
+      name="description"
+      content="Enter your bust, your swatch gauge and the pattern's finished sizes. FitCheck shows which size is closest to the ease you want, at the gauge you actually knit."
+    />
+    <meta name="theme-color" content="#F1EFEA" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body>
+    <a class="skip" href="#results">Skip to your result</a>
+
+    <header class="top">
+      <div class="top__bar">
+        <p class="wordmark">FitCheck</p>
+        <button type="button" class="text-button" id="example">Try an example</button>
+      </div>
+      <h1 class="purpose">Find your size at the gauge you actually knit.</h1>
+    </header>
+
+    <main class="page">
+      <form class="flow" id="form" novalidate autocomplete="off">
+        <fieldset class="stage" id="stage-body">
+          <legend class="stage__title">
+            <span class="stage__num" aria-hidden="true">1</span>
+            <span>Your measurements</span>
+            <span class="stage__done" hidden><span aria-hidden="true">✓</span><span class="visually-hidden">complete</span></span>
+          </legend>
+
+          <div class="toggle-row">
+            <span class="toggle-row__label" id="body-unit-label">Units</span>
+            <div class="pills" role="radiogroup" aria-labelledby="body-unit-label">
+              <label><input type="radio" name="bodyUnit" value="cm" checked /><span>cm</span></label>
+              <label><input type="radio" name="bodyUnit" value="in" /><span>in</span></label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="bust">Bust</label>
+            <div class="input-unit">
+              <input id="bust" name="bust" inputmode="decimal" aria-describedby="bust-error" />
+              <span class="suffix" data-unit="body">cm</span>
+            </div>
+            <p class="error" id="bust-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label for="ease">Ease you want</label>
+            <p class="hint" id="ease-help">How much roomier than your bust the sweater should be.</p>
+            <div class="input-unit">
+              <input id="ease" name="ease" inputmode="decimal" aria-describedby="ease-help ease-error" />
+              <span class="suffix" data-unit="body">cm</span>
+            </div>
+            <p class="error" id="ease-error" hidden></p>
+            <p class="presets-label" id="presets-label">Common starting points</p>
+            <div class="presets" id="presets" role="group" aria-labelledby="presets-label"></div>
+          </div>
+
+          <details class="howto">
+            <summary>How to measure</summary>
+            <p>
+              Measure around the fullest part of your bust, keeping the tape level and snug but not
+              tight. The presets are only common starting points; any ease you prefer is fine.
+            </p>
+          </details>
+        </fieldset>
+
+        <fieldset class="stage" id="stage-gauge">
+          <legend class="stage__title">
+            <span class="stage__num" aria-hidden="true">2</span>
+            <span>Your gauge</span>
+            <span class="stage__done" hidden><span aria-hidden="true">✓</span><span class="visually-hidden">complete</span></span>
+          </legend>
+
+          <div class="gauge">
+            <label class="gauge__who" for="patternStitches">Pattern gauge</label>
+            <div class="gauge__line">
+              <input id="patternStitches" name="patternStitches" inputmode="decimal" aria-describedby="patternGauge-error" />
+              <span class="gauge__over">stitches over</span>
+              <div class="pills pills--small" role="radiogroup" aria-label="Pattern gauge measured over">
+                <label><input type="radio" name="patternOver" value="10cm" checked /><span>10 cm</span></label>
+                <label><input type="radio" name="patternOver" value="4in" /><span>4 in</span></label>
+              </div>
+            </div>
+            <p class="error" id="patternGauge-error" hidden></p>
+          </div>
+
+          <div class="gauge">
+            <label class="gauge__who" for="userStitches">Your swatch</label>
+            <div class="gauge__line">
+              <input id="userStitches" name="userStitches" inputmode="decimal" aria-describedby="userGauge-error" />
+              <span class="gauge__over">stitches over</span>
+              <div class="pills pills--small" role="radiogroup" aria-label="Your gauge measured over">
+                <label><input type="radio" name="userOver" value="10cm" checked /><span>10 cm</span></label>
+                <label><input type="radio" name="userOver" value="4in" /><span>4 in</span></label>
+              </div>
+            </div>
+            <p class="error" id="userGauge-error" hidden></p>
+          </div>
+
+          <details class="howto">
+            <summary>How to measure gauge</summary>
+            <p>
+              Knit your swatch in the stitch the pattern uses, then wash and block it before you
+              count stitches.
+            </p>
+          </details>
+        </fieldset>
+
+        <fieldset class="stage" id="stage-sizes">
+          <legend class="stage__title">
+            <span class="stage__num" aria-hidden="true">3</span>
+            <span>Pattern sizes</span>
+            <span class="stage__done" hidden><span aria-hidden="true">✓</span><span class="visually-hidden">complete</span></span>
+          </legend>
+
+          <p class="hint hint--key">
+            Use each size’s <strong>finished bust</strong>: the sweater’s measurement, not the “to
+            fit” size.
+          </p>
+
+          <div class="toggle-row">
+            <span class="toggle-row__label" id="sizes-unit-label">Pattern units</span>
+            <div class="pills" role="radiogroup" aria-labelledby="sizes-unit-label">
+              <label><input type="radio" name="sizesUnit" value="cm" checked /><span>cm</span></label>
+              <label><input type="radio" name="sizesUnit" value="in" /><span>in</span></label>
+            </div>
+          </div>
+
+          <div class="sizes" id="sizes" role="list" aria-label="Pattern sizes"></div>
+          <p class="error" id="sizes-error" hidden></p>
+          <p class="notice" id="sizes-note" hidden></p>
+
+          <div class="sizes__actions">
+            <button type="button" class="text-button" id="add-size">+ Add size</button>
+            <button type="button" class="text-button" id="paste-toggle" aria-expanded="false" aria-controls="paste">
+              Paste sizes from pattern
+            </button>
+          </div>
+
+          <div class="paste" id="paste" hidden>
+            <label for="paste-text">Paste the finished bust line</label>
+            <textarea
+              id="paste-text"
+              rows="3"
+              placeholder="86 (91, 96, 101, 106) cm&#10;or&#10;XS: 86, S: 91, M: 96"
+            ></textarea>
+            <p class="hint">Size names on one line and measurements on the next also work.</p>
+            <div class="paste__preview" id="paste-preview" aria-live="polite"></div>
+            <div class="paste__actions">
+              <button type="button" class="button" id="paste-use" disabled>Use these sizes</button>
+              <button type="button" class="text-button" id="paste-cancel">Cancel</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+
+      <section class="answer" id="results" aria-labelledby="results-title" tabindex="-1">
+        <h2 class="visually-hidden" id="results-title">Your result</h2>
+        <p class="visually-hidden" id="announce" aria-live="polite"></p>
+        <div id="results-body"></div>
+      </section>
+    </main>
+
+    <section class="cf" id="custom-fit" aria-labelledby="cf-title">
+      <div class="cf__inner">
+        <header class="cf__intro">
+          <p class="cf__kicker">Coming next: Custom Fit</p>
+          <h2 class="cf__title" id="cf-title">Go beyond choosing a size</h2>
+          <p class="cf__lead">
+            FitCheck helps you choose the closest existing size. Custom Fit will go further by
+            adapting a pattern you already own to your actual body measurements, gauge and
+            preferred fit.
+          </p>
+        </header>
+
+        <div class="cf__compare">
+          <div class="question">
+            <p class="question__name">FitCheck</p>
+            <p class="question__text">“Which existing size should I knit?”</p>
+          </div>
+          <div class="question question--next">
+            <p class="question__name">Custom Fit</p>
+            <p class="question__text">“How should I modify this pattern so it fits me?”</p>
+          </div>
+        </div>
+
+        <div class="cf__body">
+          <div class="cf__caps">
+            <h3 class="cf__subtitle">What Custom Fit will do</h3>
+            <ul class="caps">
+              <li>
+                <strong>Body circumference</strong>
+                <span>Adjusted to your measurements and the ease you want.</span>
+              </li>
+              <li>
+                <strong>Body and sleeve lengths</strong>
+                <span>Set to where you want your sweater to end.</span>
+              </li>
+              <li>
+                <strong>Sleeve shaping</strong>
+                <span>Adapted where the pattern’s construction allows it.</span>
+              </li>
+              <li>
+                <strong>Instructions for your pattern</strong>
+                <span>Specific changes that refer to the pattern you already own.</span>
+              </li>
+            </ul>
+          </div>
+
+          <figure class="plan" aria-labelledby="plan-title">
+            <div class="plan__head">
+              <p class="plan__title" id="plan-title">Your Custom Fit Plan</p>
+              <span class="plan__tag">Preview</span>
+            </div>
+            <p class="plan__meta">Example for a top-down raglan pullover</p>
+            <ol class="plan__steps">
+              <li>Knit size S through the yoke.</li>
+              <li>
+                At the underarm, cast on 10 stitches instead of 8.
+                <span class="plan__check">You should have 236 body stitches.</span>
+              </li>
+              <li>Work the body to 37 cm before the hem.</li>
+              <li>Pick up 10 stitches at each underarm.</li>
+              <li>
+                Follow your personalized sleeve decrease schedule.
+                <span class="plan__check">Decrease every 7th round, 14 times.</span>
+              </li>
+            </ol>
+            <figcaption class="plan__note">
+              An illustrative example. A real plan refers to the sections of your own pattern.
+            </figcaption>
+          </figure>
+
+          <p class="cf__scope">
+            Custom Fit is being developed for supported garment constructions, starting with
+            top-down raglan pullovers. When a safe fit recommendation can’t be made for a pattern,
+            it will tell you so instead of guessing.
+          </p>
+        </div>
+
+        <div class="cf__cta">
+          <p class="cf__next">Custom Fit is coming next.</p>
+          <p class="cf__join" id="cf-join" hidden>Join the waitlist to get early access.</p>
+          <a class="button" id="cf-waitlist" target="_blank" rel="noopener noreferrer" hidden>
+            Join the Custom Fit waitlist
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>
+        FitCheck works entirely in your browser. Your measurements aren’t sent to our servers or analytics.
+        <span id="analytics-note" hidden>We count anonymous page events, never the numbers you type.</span>
+      </p>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

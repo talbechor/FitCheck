@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Build output (Cloudflare Pages builds this from source)
+dist/
+dist-ssr/
+
+# Local environment files. Only .env.example is committed.
+.env
+.env.*
+!.env.example
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+VERIFICATION-LOG.txt
+
+# Test, tool and deployment artifacts
+coverage/
+test-results/
+playwright-report/
+screenshots/
+.vite/
+.vitest/
+.wrangler/
+.cache/
+*.tsbuildinfo
+*.zip
+
+# OS files
+.DS_Store
+._*
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
